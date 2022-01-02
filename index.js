@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 4000;
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 
 const { User } = require("./models/User");
@@ -12,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // application/json
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 mongoose
   .connect(config.mongoURI, {
@@ -62,7 +64,12 @@ app.post("/login", (req, res) => {
       }
 
       // 비밀번호까지 같다면 Token 생성
-      user.generateToken((err, user) => {});
+      user.generateToken((err, user) => {
+        if (err) return res.status(400).send(err);
+
+        // 토큰을 저장한다. 어디에? (쿠키, 로컬스토리지, 세션 등)
+        res.cookie("x_auth", user.token).status(200).json({ loginSuccess: true, userId: user._id });
+      });
     });
   });
 });
