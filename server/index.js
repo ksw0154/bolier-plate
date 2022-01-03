@@ -25,8 +25,8 @@ mongoose
   .then(() => console.log("MongoDB conntected..."))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("Hi");
+app.get("/api/hello", (req, res) => {
+  res.send("안녕하십니까~");
 });
 
 // 회원가입
