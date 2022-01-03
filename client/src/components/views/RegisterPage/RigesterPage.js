@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_action/user_action";
+import { useNavigate } from "react-router-dom";
 
-const RegisterPage = (props) => {
+const RegisterPage = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Name, setName] = useState("");
@@ -41,6 +42,7 @@ const RegisterPage = (props) => {
 
     dispatch(registerUser(body)).then((response) => {
       if (response.payload.success) {
+        navigate("/login");
       } else {
         alert("failed to sign up");
       }
