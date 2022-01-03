@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_action/user_action";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  let navigate = useNavigate();
 
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -27,7 +28,7 @@ const LoginPage = () => {
 
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
-        // props.history.push("/");
+        navigate("/");
       } else {
         alert("error");
       }
